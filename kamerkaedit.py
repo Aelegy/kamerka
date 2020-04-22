@@ -331,9 +331,9 @@ def shodan_query(query, device,page):
             for match in result['matches']:
                 if "tags" in match:
                     if 'ics' in match['tags']:
-                        print("IP: " + Fore.GREEN + match['ip_str'] + Fore.RESET)
-                        print("Coordinates: " + Fore.BLUE + str(match['location']['latitude']) + "," + Fore.BLUE + str(
-                            match['location']['longitude']) + Fore.RESET)
+                        print("IP: " + match['ip_str'] + " - " + str(match['port']))
+                        print("Coordinates: " + str(match['location']['latitude']) + "," + str(
+                            match['location']['longitude']))
                         ics_results['matches'].append(match)
 
             return ics_results
@@ -341,9 +341,9 @@ def shodan_query(query, device,page):
         else:
             for match in result['matches']:
 
-                print("IP: " + Fore.GREEN + match['ip_str'] + Fore.RESET)
-                print("Coordinates: " + Fore.BLUE + str(match['location']['latitude']) + "," + Fore.BLUE + str(
-                    match['location']['longitude']) + Fore.RESET)
+                print("IP: " + match['ip_str'] + " - " + str(match['port']))
+                print("Coordinates: " + str(match['location']['latitude']) + "," + str(
+                    match['location']['longitude']))
 
             return result
     else:
@@ -858,8 +858,8 @@ if country:
     for ics_query in ics_queries:
         print("----------------"+ Fore.BLUE + ics_query + country + Fore.RESET + "----------------")
         shodan_ics_results = shodan_query(ics_query+country, "ics",1)
-        if shodan_ics_results:
-            ics_coordinates = draw_map(shodan_ics_results, "ics")
+#         if shodan_ics_results:
+#             ics_coordinates = draw_map(shodan_ics_results, "ics")
 
     print("Saving map as " + country + '.html')
     folium_map.save(country + ".html")
